@@ -12,6 +12,7 @@ import CoreData
 class CoreDataViewModel: ObservableObject {
     
     let container : NSPersistentContainer
+    
     @Published var savedEntities : [FruitEntity] = []
     
     init() {
@@ -104,28 +105,26 @@ struct CoreDataExample: View {
                             .alert("Please add a fruit name", isPresented: $isPresent, actions: {
                                 VStack {
                                     TextField("Write here..", text:$textFieldTextAlertUpdate)
-                                    
-                                }
-                                Button {
-                                    if textFieldTextAlertUpdate != ""{
-                                        vm.updateFruit(entity: entity, newNameFruit: textFieldTextAlertUpdate )
-                                        textFieldTextAlertUpdate = ""
+                                    HStack {
+                                        Button {
+                                            if textFieldTextAlertUpdate != ""{
+                                                vm.updateFruit(entity: entity, newNameFruit: textFieldTextAlertUpdate )
+                                                textFieldTextAlertUpdate = ""
+                                            }
+                                            
+                                        } label: {
+                                            Text("Save")
+                                                                            }
+                                        Button {
+                                            
+                                        } label: {
+                                            Text("Cancel")
+                                                
+                                        }
+
                                     }
-                                    
-                                } label: {
-                                    Text("Save")
-                                                                    }
-                                Button {
-                                    
-                                } label: {
-                                    Text("Cancel")
                                 }
-
-                                
-
-
-
-                                                            })
+                    })
                     }
                     .onDelete(perform: vm.deleteFruit)
                 }
